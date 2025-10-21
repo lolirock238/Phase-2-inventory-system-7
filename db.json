@@ -1,34 +1,3 @@
 {
-  "items": [
-    {
-      "id": 1,
-      "name": "Notebook",
-      "quantity": 10,
-      "category": "Stationery"
-    },
-    {
-      "id": 2,
-      "name": "Pen",
-      "quantity": 25,
-      "category": "Stationery"
-    },
-    {
-      "id": 3,
-      "name": "Water Bottle",
-      "quantity": 8,
-      "category": "Accessories"
-    },
-    {
-      "name": "Iphone 13",
-      "quantity": 7,
-      "category": "Electronics",
-      "id": 4
-    },
-    {
-      "name": "iphone 17 ",
-      "quantity": 4,
-      "category": "Electronics",
-      "id": 5
-    }
-  ]
+  "items": []
 }
