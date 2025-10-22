@@ -1,3 +1,10 @@
 {
-  "items": []
+  "items": [
+    {
+      "name": "w",
+      "quantity": 3,
+      "category": "Stationery",
+      "id": 1
+    }
+  ]
 }
