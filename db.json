@@ -4,7 +4,19 @@
       "name": "j",
       "quantity": 4,
       "category": "Electronics",
-      "id": 1
+      "id": 5
+    },
+    {
+      "name": "Chair",
+      "quantity": 5,
+      "category": "Furniture",
+      "id": 6
+    },
+    {
+      "name": "y",
+      "quantity": 5,
+      "category": "Stationery",
+      "id": 7
     }
   ]
 }
