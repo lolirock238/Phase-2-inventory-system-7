@@ -1,3 +1,10 @@
 {
-  "items": []
+  "items": [
+    {
+      "name": "j",
+      "quantity": 4,
+      "category": "Electronics",
+      "id": 1
+    }
+  ]
 }
