@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddItemForm from "./components/AddItemForm";
 import ItemList from "./components/ItemList";
-
+import handleEditItem from "./components/EditButton";
 export default function App() {
   const [items, setItems] = useState([]);
 
@@ -23,6 +23,21 @@ export default function App() {
       .then((r) => r.json())
       .then((addedItem) => setItems([...items, addedItem]));
   }
+  const handleDeleteButton = async (id) => {
+    try {
+      await fetch(`http://localhost:3001/items/${id}`, {
+        method: "DELETE",
+      });
+
+      // Update local state after delete
+      setItems((prev) => prev.filter((items) => items.id !== id));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  handleEditItem;
+  // Edit item
 
   return (
     <div className="App">
@@ -32,7 +47,7 @@ export default function App() {
       <AddItemForm onAddItem={handleAddItem} />
 
       {/* Pass the items to the list component */}
-      <ItemList items={items} />
+      <ItemList items={items} onDeleteItem={handleDeleteButton} />
     </div>
   );
 }
