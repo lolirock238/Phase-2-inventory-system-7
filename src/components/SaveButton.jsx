@@ -12,5 +12,4 @@ function handleEditItem(id, updatedFields) {
     })
     .catch((err) => console.error("Error updating item:", err));
 }
-
 export default handleEditItem;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddItemForm from "./components/AddItemForm";
-import ItemList from "./components/ItemList";
-import handleEditItem from "./components/EditButton";
+import InventoryTable from "./components/InventoryTable";
+
 export default function App() {
   const [items, setItems] = useState([]);
 
@@ -21,33 +21,46 @@ export default function App() {
       body: JSON.stringify(newItem),
     })
       .then((r) => r.json())
-      .then((addedItem) => setItems([...items, addedItem]));
+      .then((addedItem) => setItems((prev) => [...prev, addedItem]))
+      .catch((err) => console.error("Add error:", err));
   }
-  const handleDeleteButton = async (id) => {
-    try {
-      await fetch(`http://localhost:3001/items/${id}`, {
-        method: "DELETE",
-      });
 
-      // Update local state after delete
-      setItems((prev) => prev.filter((items) => items.id !== id));
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
-  };
+  // Delete item
+  function handleDeleteItem(id) {
+    fetch(`http://localhost:3001/items/${id}`, { method: "DELETE" })
+      .then(() => setItems((prev) => prev.filter((item) => item.id !== id)))
+      .catch((err) => console.error("Delete error:", err));
+  }
 
-  handleEditItem;
   // Edit item
+  function handleEditItem(id, updatedFields) {
+    fetch(`http://localhost:3001/items/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedFields),
+    })
+      .then((r) => r.json())
+      .then((updatedItem) =>
+        setItems((prev) =>
+          prev.map((item) => (item.id === id ? updatedItem : item))
+        )
+      )
+      .catch((err) => console.error("Update error:", err));
+  }
 
   return (
-    <div className="App">
+    <div className="App" style={{ padding: "20px" }}>
       <h1>🧾 Inventory List</h1>
 
-      {/* Pass the function down to the AddItemForm */}
+      {/* Form for adding items */}
       <AddItemForm onAddItem={handleAddItem} />
 
-      {/* Pass the items to the list component */}
-      <ItemList items={items} onDeleteItem={handleDeleteButton} />
+      {/* Table for viewing, editing, deleting items */}
+      <InventoryTable
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onEditItem={handleEditItem}
+      />
     </div>
   );
 }
