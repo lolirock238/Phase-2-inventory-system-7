@@ -7,16 +7,10 @@
       "id": 5
     },
     {
-      "name": "Chair",
-      "quantity": 5,
-      "category": "Furniture",
-      "id": 6
-    },
-    {
-      "name": "y",
-      "quantity": 5,
-      "category": "Stationery",
-      "id": 7
+      "name": "Dead Body ",
+      "quantity": 3,
+      "category": "Human Remains",
+      "id": 8
     }
   ]
 }
