@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import AddItemForm from "./components/AddItemForm";
 import InventoryTable from "./components/InventoryTable";
+import SearchBar from "./components/SearchBar";
+import FilterControls from "./components/FilterControls";
+import PaginationControls from "./components/PaginationControls";
 
 export default function App() {
   const [items, setItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
-  // Fetch existing items from db.json
+  // Fetch items
   useEffect(() => {
     fetch("http://localhost:3001/items")
       .then((r) => r.json())
@@ -13,7 +20,7 @@ export default function App() {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
-  // Function to handle adding a new item
+  // Add item
   function handleAddItem(newItem) {
     fetch("http://localhost:3001/items", {
       method: "POST",
@@ -48,18 +55,41 @@ export default function App() {
       .catch((err) => console.error("Update error:", err));
   }
 
+  // Filter + Search + Pagination
+  const filteredItems = items
+    .filter((item) =>
+      filterCategory ? item.category === filterCategory : true
+    )
+    .filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const paginatedItems = filteredItems.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    <div className="App" style={{ padding: "20px" }}>
-      <h1>🧾 Inventory List</h1>
+    <div className="App" style={{ padding: "20px", color: "#eee" }}>
+      <h1>🧾 Inventory System</h1>
 
-      {/* Form for adding items */}
       <AddItemForm onAddItem={handleAddItem} />
-
-      {/* Table for viewing, editing, deleting items */}
-      <InventoryTable
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <FilterControls
         items={items}
+        filterCategory={filterCategory}
+        setFilterCategory={setFilterCategory}
+      />
+      <InventoryTable
+        items={paginatedItems}
         onDeleteItem={handleDeleteItem}
         onEditItem={handleEditItem}
+      />
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );
