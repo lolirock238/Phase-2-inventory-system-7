@@ -1,31 +1,44 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 export default function FilterControls({
   items = [],
   filterCategory,
   setFilterCategory,
 }) {
-  // Defensive guard: ensure we don’t break when items is undefined
-  const categories = Array.isArray(items)
-    ? [...new Set(items.map((item) => item.category).filter(Boolean))]
-    : [];
+  // Use useMemo for performance: recalculate only when `items` changes
+  const categories = useMemo(() => {
+    if (!Array.isArray(items)) return [];
+    // Extract unique categories and sort them
+    const cats = [
+      ...new Set(items.map((item) => item.category).filter(Boolean)),
+    ];
+    return cats.sort((a, b) => a.localeCompare(b));
+  }, [items]);
 
   return (
-    <select
-      value={filterCategory}
-      onChange={(e) => setFilterCategory(e.target.value)}
-      style={{ margin: "10px", padding: "8px", borderRadius: "8px" }}
-    >
-      <option value="">All Categories</option>
-      {categories.length > 0 ? (
-        categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))
-      ) : (
-        <option disabled>No categories found</option>
-      )}
-    </select>
+    <div style={{ margin: "10px 0" }}>
+      <select
+        value={filterCategory}
+        onChange={(e) => setFilterCategory(e.target.value)}
+        style={{
+          padding: "8px 12px",
+          borderRadius: "8px",
+          backgroundColor: "#1c1c1c",
+          color: "white",
+          border: "1px solid #333",
+        }}
+      >
+        <option value="">All Categories</option>
+        {categories.length > 0 ? (
+          categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))
+        ) : (
+          <option disabled>No categories available</option>
+        )}
+      </select>
+    </div>
   );
 }
