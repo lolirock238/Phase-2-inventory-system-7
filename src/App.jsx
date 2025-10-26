@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddItemForm from "./components/AddItemForm";
 import InventoryTable from "./components/InventoryTable";
+import ItemList from "./components/ItemList";
 import SearchBar from "./components/SearchBar";
 import FilterControls from "./components/FilterControls";
 import PaginationControls from "./components/PaginationControls";
@@ -70,22 +71,29 @@ export default function App() {
     currentPage * itemsPerPage
   );
 
+  // Get unique categories for filter dropdown
+  const categories = [...new Set(items.map((item) => item.category))];
+
   return (
     <div className="App" style={{ padding: "20px", color: "#eee" }}>
       <h1>🧾 Inventory System</h1>
 
       <AddItemForm onAddItem={handleAddItem} />
+
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       <FilterControls
-        items={items}
-        filterCategory={filterCategory}
-        setFilterCategory={setFilterCategory}
+        categories={categories}
+        selectedCategory={filterCategory}
+        onFilterChange={setFilterCategory}
       />
+
       <InventoryTable
         items={paginatedItems}
         onDeleteItem={handleDeleteItem}
         onEditItem={handleEditItem}
       />
+
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}
