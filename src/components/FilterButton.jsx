@@ -5,18 +5,19 @@ export default function App() {
   const [items, setItems] = useState([]);
   //state to filter the category of the items
   const [filter, setFilter] = useState("All");
-//fuction to add new item from Additemform
+  //fuction to add new item from Additemform
   function handleAddItem(newItem) {
     //adding unique id to item using date.now
     const itemWithId = { id: Date.now(), ...newItem };
     //use of spread operator existing items + add in of the new ones
     setItems([...items, itemWithId]);
   }
-
+  //function to delete item by id
   function handleDeleteItem(id) {
+    //Keep all items except the one with the matching ID
     setItems(items.filter((item) => item.id !== id));
   }
-
+  //filtering of items based on category also use of if and else using ?:
   const filteredItems =
     filter === "All" ? items : items.filter((item) => item.category === filter);
 
