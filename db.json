@@ -17,6 +17,13 @@
       "quantity": 2,
       "category": "Accessories",
       "id": 4
+    },
+    {
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
+      "id": 5
     }
   ]
 }
