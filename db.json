@@ -13,25 +13,10 @@
       "id": 3
     },
     {
-      "name": null,
-      "quantity": null,
-      "category": "Stationery",
-      "id": 4,
-      "costPerUnit": null
-    },
-    {
-      "name": "Sugar",
+      "name": "dd",
       "quantity": 2,
-      "category": "Food",
-      "costPerUnit": 300,
-      "id": 5
-    },
-    {
-      "name": "cads",
-      "quantity": 2,
-      "category": "Electronics",
-      "costPerUnit": 0.02,
-      "id": 6
+      "category": "Accessories",
+      "id": 4
     }
   ]
 }
