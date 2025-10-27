@@ -1,3 +1,29 @@
 {
-  "items": []
+  "items": [
+    {
+      "name": "df",
+      "quantity": 2,
+      "category": "Stationery",
+      "id": 2
+    },
+    {
+      "name": "df",
+      "quantity": 3,
+      "category": "Stationery",
+      "id": 3
+    },
+    {
+      "name": "papers",
+      "quantity": 20,
+      "category": "Stationery",
+      "id": 4
+    },
+    {
+      "name": "Sugar",
+      "quantity": 2,
+      "category": "Food",
+      "costPerUnit": 300,
+      "id": 5
+    }
+  ]
 }
