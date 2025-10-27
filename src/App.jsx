@@ -64,11 +64,16 @@ export default function App() {
   const filteredItems = useMemo(() => {
     return items
       .filter((it) => (filterCategory ? it.category === filterCategory : true))
-      .filter((it) => (it.name || "").toLowerCase().includes(searchTerm.toLowerCase()));
+      .filter((it) =>
+        (it.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+      );
   }, [items, filterCategory, searchTerm]);
 
   // Pagination calculations
-  const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredItems.length / itemsPerPage)
+  );
   useEffect(() => {
     // If filtering/search changed, reset to first page to avoid empty pages
     setCurrentPage(1);
@@ -90,9 +95,15 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="card" style={{ marginBottom: 16 }}>
-        <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+        <header
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+          }}
+        >
           <h1 style={{ margin: 0 }}>🧾 Inventory System</h1>
-
 
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -105,7 +116,9 @@ export default function App() {
         </header>
       </div>
 
-      <main style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 16 }}>
+      <main
+        style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 16 }}
+      >
         <aside>
           <div className="card">
             <h2 style={{ marginTop: 0 }}>Add Item</h2>
@@ -133,27 +146,6 @@ export default function App() {
           </div>
         </section>
       </main>
-
-      <AddItemForm onAddItem={handleAddItem} />
-
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-      <FilterControls
-        categories={categories}
-        selectedCategory={filterCategory}
-        onFilterChange={setFilterCategory}
-      />
-
-      <InventoryTable
-        items={paginatedItems}
-        onDeleteItem={handleDeleteItem}
-        onEditItem={handleEditItem}
-      />
-      <PaginationControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
     </div>
   );
 }

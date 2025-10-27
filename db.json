@@ -24,6 +24,13 @@
       "category": "Food",
       "costPerUnit": 300,
       "id": 5
+    },
+    {
+      "name": "cads",
+      "quantity": 2,
+      "category": "Electronics",
+      "costPerUnit": 0.02,
+      "id": 6
     }
   ]
 }
