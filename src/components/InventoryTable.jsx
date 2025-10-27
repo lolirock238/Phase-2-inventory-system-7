@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-table";
 import PaginationControls from "./PaginationControls";
 import FilterControls from "./FilterControls";
+import CostPerUnit from "./CostPerUnit";
+import TotalValue from "./TotalValue";
 
 export default function InventoryTable({ items, onDeleteItem, onEditItem }) {
   const [sorting, setSorting] = useState([]);
@@ -34,6 +36,24 @@ export default function InventoryTable({ items, onDeleteItem, onEditItem }) {
       { header: "Quantity", accessorKey: "quantity" },
       { header: "Category", accessorKey: "category" },
       {
+        header: "Cost Per Unit",
+        accessorKey: "costPerUnit",
+        cell: ({ row }) => (
+          <CostPerUnit cost={row.original.costPerUnit} className="text-right" />
+        ),
+      },
+      {
+        header: "Total Value",
+        accessorKey: "totalValue",
+        cell: ({ row }) => (
+          <TotalValue
+            quantity={row.original.quantity}
+            costPerUnit={row.original.costPerUnit}
+            className="text-right font-semibold"
+          />
+        ),
+      },
+      {
         header: "Actions",
         cell: ({ row }) => (
           <>
@@ -41,12 +61,23 @@ export default function InventoryTable({ items, onDeleteItem, onEditItem }) {
               onClick={() =>
                 onEditItem(row.original.id, {
                   name: prompt("New name:", row.original.name),
+                  quantity: prompt("New quantity:", row.original.quantity),
+                  costPerUnit: prompt(
+                    "New cost per unit:",
+                    row.original.costPerUnit
+                  ),
                 })
               }
+              style={{ marginRight: "8px", cursor: "pointer" }}
             >
               ✏️
             </button>
-            <button onClick={() => onDeleteItem(row.original.id)}>🗑️</button>
+            <button
+              onClick={() => onDeleteItem(row.original.id)}
+              style={{ cursor: "pointer" }}
+            >
+              🗑️
+            </button>
           </>
         ),
       },
@@ -92,7 +123,7 @@ export default function InventoryTable({ items, onDeleteItem, onEditItem }) {
                   style={{
                     padding: "10px",
                     borderBottom: "1px solid #333",
-                    cursor: "pointer",
+                    cursor: header.column.getCanSort() ? "pointer" : "default",
                     textAlign: "left",
                   }}
                   onClick={header.column.getToggleSortingHandler()}
