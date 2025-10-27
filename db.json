@@ -13,10 +13,11 @@
       "id": 3
     },
     {
-      "name": "papers",
-      "quantity": 20,
+      "name": null,
+      "quantity": null,
       "category": "Stationery",
-      "id": 4
+      "id": 4,
+      "costPerUnit": null
     },
     {
       "name": "Sugar",
