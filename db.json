@@ -1,12 +1,6 @@
 {
   "items": [
     {
-      "name": "knb",
-      "quantity": 2,
-      "category": "Food",
-      "id": 1
-    },
-    {
       "name": "df",
       "quantity": 2,
       "category": "Stationery",
@@ -17,6 +11,19 @@
       "quantity": 3,
       "category": "Stationery",
       "id": 3
+    },
+    {
+      "name": "papers",
+      "quantity": 20,
+      "category": "Stationery",
+      "id": 4
+    },
+    {
+      "name": "Sugar",
+      "quantity": 2,
+      "category": "Food",
+      "costPerUnit": 300,
+      "id": 5
     }
   ]
 }

@@ -1,70 +1,235 @@
 import React, { useState } from "react";
+import CostPerUnit from "./CostPerUnit";
+import TotalValue from "./TotalValue";
 
 export default function ItemList({ items = [], onDeleteItem, onEditItem }) {
   const [editingId, setEditingId] = useState(null);
-  const [newName, setNewName] = useState("");
+  const [editForm, setEditForm] = useState({
+    name: "",
+    quantity: 0,
+    costPerUnit: 0,
+  });
 
   function handleEditClick(item) {
     setEditingId(item.id);
-    setNewName(item.name || "");
+    setEditForm({
+      name: item.name || "",
+      quantity: item.quantity ?? 0,
+      costPerUnit: item.costPerUnit ?? 0,
+    });
   }
 
   function handleSaveClick(id) {
-    if (!newName.trim()) return;
-    onEditItem(id, { name: newName.trim() });
+    // basic validation
+    if (!editForm.name.trim()) return;
+
+    onEditItem(id, {
+      name: editForm.name.trim(),
+      quantity: parseFloat(editForm.quantity) || 0,
+      costPerUnit: parseFloat(editForm.costPerUnit) || 0,
+    });
+
     setEditingId(null);
-    setNewName("");
+    setEditForm({ name: "", quantity: 0, costPerUnit: 0 });
   }
 
   function handleCancelClick() {
     setEditingId(null);
-    setNewName("");
+    setEditForm({ name: "", quantity: 0, costPerUnit: 0 });
+  }
+
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setEditForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return <div className="list__empty">No items yet — add one with the form.</div>;
   }
 
   return (
-    <ul className="list">
-      {items.length === 0 && (
-        <li className="list__empty">No items yet — add one with the form.</li>
-      )}
-
+    <div className="item-list">
       {items.map((item) => (
-        <li key={item.id} className="list__item">
-          <div className="list__main">
-            {editingId === item.id ? (
-              <input
-                className="input"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                aria-label={`Edit name for ${item.name}`}
-              />
-            ) : (
-              <>
-                <div className="list__title">{item.name}</div>
-                <div className="list__meta">{item.category} • qty {item.quantity}</div>
-              </>
-            )}
-          </div>
+        <div
+          key={item.id}
+          className="item-card"
+          style={{
+            border: "1px solid #333",
+            borderRadius: "8px",
+            padding: "16px",
+            margin: "8px 0",
+            background: "#1a1a1a",
+          }}
+        >
+          {editingId === item.id ? (
+            <div className="edit-form">
+              <div style={{ marginBottom: "12px" }}>
+                <label style={{ display: "block", marginBottom: "4px", color: "#eee" }}>
+                  Name:
+                </label>
+                <input
+                  name="name"
+                  value={editForm.name}
+                  onChange={handleInputChange}
+                  className="input"
+                />
+              </div>
 
-          <div className="list__actions">
-            {editingId === item.id ? (
-              <>
-                <button className="btn btn--primary" onClick={() => handleSaveClick(item.id)}>Save</button>
-                <button className="btn" onClick={handleCancelClick}>Cancel</button>
-              </>
-            ) : (
-              <>
-                <button className="btn" onClick={() => handleEditClick(item)}>Edit</button>
+              <div style={{ marginBottom: "12px" }}>
+                <label style={{ display: "block", marginBottom: "4px", color: "#eee" }}>
+                  Quantity:
+                </label>
+                <input
+                  type="number"
+                  name="quantity"
+                  value={editForm.quantity}
+                  onChange={handleInputChange}
+                  className="input"
+                />
+              </div>
+
+              <div style={{ marginBottom: "12px" }}>
+                <label style={{ display: "block", marginBottom: "4px", color: "#eee" }}>
+                  Cost Per Unit:
+                </label>
+                <input
+                  type="number"
+                  name="costPerUnit"
+                  value={editForm.costPerUnit}
+                  onChange={handleInputChange}
+                  step="0.01"
+                  min="0"
+                  className="input"
+                />
+              </div>
+
+              <div
+                style={{
+                  marginBottom: "12px",
+                  padding: "8px",
+                  background: "#2a2a2a",
+                  borderRadius: "4px",
+                }}
+              >
+                <strong style={{ color: "#eee" }}>Preview:</strong>
+                <div style={{ color: "#ccc", fontSize: "14px", marginTop: "4px" }}>
+                  Cost: <CostPerUnit cost={editForm.costPerUnit} />
+                </div>
+                <div style={{ color: "#ccc", fontSize: "14px" }}>
+                  Total Value:{" "}
+                  <TotalValue quantity={editForm.quantity} costPerUnit={editForm.costPerUnit} />
+                </div>
+              </div>
+
+              <div>
                 <button
-                  className="btn btn--danger"
-                  onClick={() => { if (confirm(`Delete ${item.name}?`)) onDeleteItem(item.id); }}
+                  onClick={() => handleSaveClick(item.id)}
+                  style={{
+                    marginRight: "8px",
+                    padding: "8px 16px",
+                    background: "#4CAF50",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={handleCancelClick}
+                  style={{
+                    padding: "8px 16px",
+                    background: "#f44336",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="item-display">
+              <div style={{ marginBottom: "8px" }}>
+                <strong style={{ color: "#eee", fontSize: "18px" }}>{item.name}</strong>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+                  gap: "12px",
+                  marginBottom: "12px",
+                }}
+              >
+                <div>
+                  <div style={{ color: "#ccc", fontSize: "14px" }}>Quantity</div>
+                  <div style={{ color: "#eee" }}>{item.quantity}</div>
+                </div>
+
+                <div>
+                  <div style={{ color: "#ccc", fontSize: "14px" }}>Cost Per Unit</div>
+                  <div style={{ color: "#eee" }}>
+                    <CostPerUnit cost={item.costPerUnit} />
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ color: "#ccc", fontSize: "14px" }}>Total Value</div>
+                  <div style={{ color: "#4CAF50", fontWeight: "bold" }}>
+                    <TotalValue quantity={item.quantity} costPerUnit={item.costPerUnit} />
+                  </div>
+                </div>
+
+                {item.category && (
+                  <div>
+                    <div style={{ color: "#ccc", fontSize: "14px" }}>Category</div>
+                    <div style={{ color: "#eee" }}>{item.category}</div>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <button
+                  onClick={() => handleEditClick(item)}
+                  style={{
+                    marginRight: "8px",
+                    padding: "6px 12px",
+                    background: "#2196F3",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Delete ${item.name}?`)) onDeleteItem(item.id);
+                  }}
+                  style={{
+                    padding: "6px 12px",
+                    background: "#f44336",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
                 >
                   Delete
                 </button>
-              </>
-            )}
-          </div>
-        </li>
+              </div>
+            </div>
+          )}
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

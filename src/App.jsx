@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import AddItemForm from "./components/AddItemForm";
 import InventoryTable from "./components/InventoryTable";
+import ItemList from "./components/ItemList";
 import SearchBar from "./components/SearchBar";
 import FilterControls from "./components/FilterControls";
 import PaginationControls from "./components/PaginationControls";
@@ -83,11 +84,15 @@ export default function App() {
     return filteredItems.slice(start, start + itemsPerPage);
   }, [filteredItems, currentPage]);
 
+  // Get unique categories for filter dropdown
+  const categories = [...new Set(items.map((item) => item.category))];
+
   return (
     <div className="app-container">
       <div className="card" style={{ marginBottom: 16 }}>
         <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
           <h1 style={{ margin: 0 }}>🧾 Inventory System</h1>
+
 
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -128,6 +133,27 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      <AddItemForm onAddItem={handleAddItem} />
+
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      <FilterControls
+        categories={categories}
+        selectedCategory={filterCategory}
+        onFilterChange={setFilterCategory}
+      />
+
+      <InventoryTable
+        items={paginatedItems}
+        onDeleteItem={handleDeleteItem}
+        onEditItem={handleEditItem}
+      />
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }
