@@ -24,6 +24,20 @@
       "category": "Food",
       "costPerUnit": 300,
       "id": 5
+    },
+    {
+      "name": "watches",
+      "quantity": 2,
+      "category": "Accessories",
+      "costPerUnit": 0.02,
+      "id": 6
+    },
+    {
+      "name": "caps",
+      "quantity": 20,
+      "category": "staff uniforms",
+      "costPerUnit": 100,
+      "id": 7
     }
   ]
 }
