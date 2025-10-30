@@ -153,9 +153,6 @@ export default function InventoryTable({ items, onDeleteItem, onEditItem }) {
           ))}
         </tbody>
       </table>
-
-      {/* Pagination controls */}
-      <PaginationControls table={table} />
     </div>
   );
 }

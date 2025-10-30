@@ -5,19 +5,39 @@ export default function FilterControls({
   filterCategory,
   setFilterCategory,
 }) {
-  // Use useMemo for performance: recalculate only when `items` changes
   const categories = useMemo(() => {
     if (!Array.isArray(items)) return [];
-    // Extract unique categories and sort them
-    const cats = [
+
+    const uniqueCategories = [
       ...new Set(items.map((item) => item.category).filter(Boolean)),
     ];
-    return cats.sort((a, b) => a.localeCompare(b));
+
+    return uniqueCategories.sort((a, b) => a.localeCompare(b));
   }, [items]);
 
   return (
-    <div style={{ margin: "10px 0" }}>
+    <div
+      style={{
+        margin: "10px 0",
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+      }}
+    >
+      <label
+        htmlFor="filter-category"
+        style={{
+          color: "#ccc",
+          fontWeight: "500",
+          fontSize: "0.9rem",
+        }}
+      >
+        Filter by:
+      </label>
+
       <select
+        key={categories.join(",")}
+        id="filter-category"
         value={filterCategory}
         onChange={(e) => setFilterCategory(e.target.value)}
         style={{
@@ -26,6 +46,9 @@ export default function FilterControls({
           backgroundColor: "#1c1c1c",
           color: "white",
           border: "1px solid #333",
+          minWidth: "160px",
+          cursor: "pointer",
+          outline: "none",
         }}
       >
         <option value="">All Categories</option>

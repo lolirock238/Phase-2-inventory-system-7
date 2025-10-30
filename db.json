@@ -13,16 +13,16 @@
       "id": 3
     },
     {
-      "name": "papers",
-      "quantity": 20,
-      "category": "Stationery",
+      "name": "dd",
+      "quantity": 2,
+      "category": "Accessories",
       "id": 4
     },
     {
-      "name": "Sugar",
-      "quantity": 2,
-      "category": "Food",
-      "costPerUnit": 300,
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
       "id": 5
     },
     {
@@ -31,6 +31,18 @@
       "category": "Food",
       "costPerUnit": 50,
       "id": 6
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
+      "id": 6
+    },
+    {
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
+      "id": 7
     }
   ]
 }
