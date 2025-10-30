@@ -31,11 +31,7 @@
       "category": "Food",
       "costPerUnit": 50,
       "id": 6
-      "name": "cads",
-      "quantity": 34,
-      "category": "Accessories",
-      "costPerUnit": 0.01,
-      "id": 6
+      
     },
     {
       "name": "cads",
