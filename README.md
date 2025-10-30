@@ -33,7 +33,6 @@ The application's structure, visible in the `/components` directory, organizes f
 | **Styling** | 
 **`App.css`**, **`main.css`**(and other stylings inside individual components)- Defines the visual presentation. 
 
----
 
 ##  Local Setup Instructions
 
@@ -59,4 +58,27 @@ json-server --watch db.json --port
 
 # Start the front-end application
 npm run dev
+
+#Run npm run build
+This creates a config.js (deployment Conifigurations
+
+
+# Connect Netlify to Your Repository
+Go to Netlify
+
+Click "Add new site" → "Import an existing project"
+
+Connect to your Git provider (GitHub, GitLab, etc.)
+
+Select your repository
+
+Configure build settings:
+
+Build command: npm run build
+
+Publish directory: dist
+
+Click "Deploy site"
+
+
 
