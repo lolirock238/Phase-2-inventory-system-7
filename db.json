@@ -2,9 +2,10 @@
   "items": [
     {
       "name": "df",
-      "quantity": 2,
+      "quantity": "2",
       "category": "Stationery",
-      "id": 2
+      "id": 2,
+      "costPerUnit": ""
     },
     {
       "name": "df",
