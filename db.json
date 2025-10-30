@@ -13,30 +13,30 @@
       "id": 3
     },
     {
-      "name": "papers",
-      "quantity": 20,
-      "category": "Stationery",
+      "name": "dd",
+      "quantity": 2,
+      "category": "Accessories",
       "id": 4
     },
     {
-      "name": "Sugar",
-      "quantity": 2,
-      "category": "Food",
-      "costPerUnit": 300,
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
       "id": 5
     },
     {
-      "name": "watches",
-      "quantity": 2,
+      "name": "cads",
+      "quantity": 34,
       "category": "Accessories",
-      "costPerUnit": 0.02,
+      "costPerUnit": 0.01,
       "id": 6
     },
     {
-      "name": "caps",
-      "quantity": 20,
-      "category": "staff uniforms",
-      "costPerUnit": 100,
+      "name": "cads",
+      "quantity": 34,
+      "category": "Accessories",
+      "costPerUnit": 0.01,
       "id": 7
     }
   ]
