@@ -1,4 +1,6 @@
 function handleEditItem(id, updatedFields) {
+  const apiUrl = import.meta.env.VITE_APP_URL;
+  fetch(`${apiUrl}/${id}`)
   fetch(`http://localhost:3001/items/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
